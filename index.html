@@ -1,83 +1,273 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Florence Assignment</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #f8fafc;
-        color: #111827;
-        line-height: 1.6;
-      }
-      .page {
-        max-width: 920px;
-        margin: 0 auto;
-        padding: 48px 24px;
-      }
-      header {
-        margin-bottom: 40px;
-      }
-      h1 {
-        margin: 0 0 12px;
-        font-size: clamp(2.4rem, 3.5vw, 3.8rem);
-        letter-spacing: -0.04em;
-      }
-      p.lead {
-        margin: 0;
-        color: #374151;
-        font-size: 1.1rem;
-      }
-      section {
-        background: #ffffff;
-        border: 1px solid #e5e7eb;
-        border-radius: 24px;
-        padding: 32px;
-        box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
-      }
-      h2 {
-        margin-top: 0;
-        color: #111827;
-      }
-      .note {
-        color: #1d4ed8;
-        font-weight: 600;
-      }
-      .footer {
-        margin-top: 36px;
-        font-size: 0.95rem;
-        color: #6b7280;
-      }
-      a {
-        color: #2563eb;
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="page">
-      <header>
-        <h1>Florence Assignment</h1>
-        <p class="lead">A static website homepage for the IP law assignment repository.</p>
-      </header>
-      <section>
-        <h2>About this repository</h2>
-        <p>This repository is now ready to be published as a website. The file <code>index.html</code> serves as the homepage for GitHub Pages or any static site host.</p>
-        <p>Use the repository settings to enable GitHub Pages from the <strong>main</strong> branch, or deploy the contents of the repository to any static hosting provider.</p>
-      </section>
-      <section style="margin-top: 24px;">
-        <h2>Assignment details</h2>
-        <p>This page is a starting point. Replace this content with your IP law assignment text, images, and resources.</p>
-        <p class="note">Tip: keep your website files in the repository root, and GitHub Pages will serve <code>index.html</code>.</p>
-      </section>
-      <div class="footer">
-        <p>Want to edit this site? Update <code>index.html</code> and commit your changes.</p>
-      </div>
+
+<style>
+.opt-row{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);cursor:pointer;margin-bottom:8px}
+.opt-row:hover{background:var(--color-background-secondary)}
+.opt-row.sel{border:1.5px solid #378ADD;background:#E6F1FB20}
+.opt-row.sel .opt-label,.opt-row.sel .opt-desc{color:#185FA5}
+.opt-label{font-size:13px;font-weight:500;min-width:62px;padding-top:1px;color:var(--color-text-secondary);flex-shrink:0}
+.opt-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.5}
+.q-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px 18px;margin-bottom:14px}
+.q-card.done{border-color:var(--color-border-secondary)}
+.q-note{font-size:12px;color:var(--color-text-tertiary);font-style:italic;margin:8px 0 12px;line-height:1.5;padding:8px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
+.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-tertiary);background:var(--color-background-primary);flex-shrink:0}
+.step-dot.active{background:#1B2A41;color:#fff;border-color:#1B2A41}
+.step-dot.done{background:#EAF3DE;color:#3B6D11;border-color:#97C459}
+.section-block{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:18px 20px;margin-bottom:14px}
+.section-label{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:6px}
+.section-title{font-size:16px;font-weight:500;color:var(--color-text-primary);margin:0 0 10px;line-height:1.4}
+.section-body{font-size:13px;color:var(--color-text-secondary);line-height:1.65}
+.cta-block{background:#1B2A41;color:#fff;border-radius:var(--border-radius-lg);padding:20px 22px;margin-top:8px;margin-bottom:16px}
+.cta-label{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:10px}
+.cta-body{font-size:14px;line-height:1.65;color:rgba(255,255,255,0.92)}
+.counterfeit-note{background:#FAEEDA30;border:0.5px solid #FAC775;border-radius:var(--border-radius-md);padding:12px 14px;margin-top:16px;font-size:13px;color:#854F0B;line-height:1.6}
+.scope-note{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:11px 14px;margin-bottom:16px;font-size:12px;color:var(--color-text-secondary);line-height:1.55}
+.limit-note{font-size:11px;color:var(--color-text-tertiary);font-style:italic;line-height:1.55;margin-top:18px;padding-top:14px;border-top:0.5px solid var(--color-border-tertiary)}
+.dupe-bar{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px 16px;border-left:3px solid #1B2A41;margin-bottom:24px}
+.cat-pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:var(--border-radius-md);font-size:11px;font-weight:500;margin:2px}
+.cat-pill.low{background:#E6F1FB;color:#185FA5}
+.cat-pill.partial{background:#FAEEDA;color:#854F0B}
+.cat-pill.high{background:#EAF3DE;color:#3B6D11}
+.cat-pill.none{background:var(--color-background-secondary);color:var(--color-text-tertiary)}
+.warning-banner{background:#FAEEDA30;border:0.5px solid #FAC775;border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:20px;font-size:13px;color:#854F0B}
+.special-note{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--color-text-secondary);line-height:1.6;border-left:2px solid var(--color-border-secondary)}
+</style>
+
+<div id="root" style="padding:0 0 2rem"></div>
+
+<script>
+const CATS=[
+{id:'A',name:'Your product\u2019s value and physical protection',
+ intro:'Understanding where your product\u2019s value actually comes from, and whether the physical layer of that value has any protection. This determines what a dupe can and cannot take from you before brand, visual identity, or legal tools are even considered.',
+ qs:[
+  {id:'A1',text:'Where does most of your product\u2019s commercial value come from \u2014 the physical product itself (formulation, function, performance), the visual identity (look, packaging, design), or something less tangible (brand meaning, customer relationships, community, trust)?',
+   opts:{Low:'Primarily physical \u2014 customers buy it for what it does or how it performs. The product itself is the value.',Partial:'Mixed \u2014 value sits across two or more of these layers genuinely and deliberately.',High:'Primarily intangible \u2014 customers buy it for what the brand means, the relationship they have with it, or what it represents. The physical product is part of the value but not the core.'}},
+  {id:'A2',text:'Does your product rely on a patent, trade secret, or proprietary process that creates a genuine technical barrier a competitor would struggle to overcome?',
+   opts:{Low:'No \u2014 no patent, trade secret, or proprietary process exists. Competitors can produce a functional equivalent without difficulty.',Partial:'Some barrier exists \u2014 but it is partial, time-limited, or known to be vulnerable.',High:'Yes \u2014 a patent, trade secret, or proprietary process creates a meaningful substitution barrier that is not easily overcome.'}},
+  {id:'A3',text:'Does that technical story \u2014 the formula, the process, the science behind the product \u2014 actually drive consumers to choose your product over cheaper alternatives that claim to do the same thing?',
+   note:'This question matters even where no hard patent exists. A formulation narrative can do commercial work without legal protection behind it.',
+   opts:{Low:'No \u2014 consumers in this market treat competing products as functionally equivalent regardless of formulation claims. A cheaper alternative is an acceptable substitute for most of them.',Partial:'Somewhat \u2014 a portion of customers factor the formulation or technical story into their purchasing decision, but it is not the dominant driver of preference.',High:'Yes \u2014 customers actively seek out this product for its specific formulation or technical properties. The brand has built genuine conviction around what makes it different \u2014 Olaplex-style belief in the formula \u2014 that a cheaper alternative cannot easily displace.'}},
+ ]},
+{id:'B',name:'Visual exposure',
+ intro:'How exposed is the visual layer of your brand to dupe activity. Visual identity \u2014 packaging, colour, shape, the codes that signal what your brand is \u2014 is the most commonly copied layer in the dupe economy.',
+ qs:[
+  {id:'B4',text:'Could a competitor reproduce the visual identity of your product \u2014 packaging, colour, shape, the visual codes that signal what your brand is \u2014 without copying it outright?',
+   opts:{Low:'No \u2014 your visual identity is highly specific and would be hard to evoke without literal copying.',Partial:'Partially \u2014 the broad visual codes could be evoked, but specific distinctive elements would be hard to reproduce without crossing into direct copying.',High:'Yes \u2014 the visual codes your brand uses are widely accessible and could be reproduced or evoked easily by a competitor without copying any single protected element.'}},
+ ]},
+{id:'C',name:'What can the law actually reach?',
+ intro:'Australian IP law was largely built for copies, not dupes. This category assesses whether your situation involves anything the law genuinely addresses \u2014 and where it doesn\u2019t, the guide is honest about that.',
+ qs:[
+  {id:'C5',text:'Does your product have visual features distinctive enough to register as designs under Australian law \u2014 shape, configuration, ornamentation, or surface pattern that is specific to your product rather than generic to the category?',
+   note:'This is asking whether registrable features exist, not whether you have already registered them.',
+   opts:{Low:'No \u2014 the visual appearance of the product and packaging is largely generic to the category. There is nothing sufficiently distinctive that would meet the requirements for design registration.',Partial:'Some distinctive features exist that could potentially be registered, alongside others that are more generic or shared with the category.',High:'Yes \u2014 the product has clearly distinctive visual features that are registrable and meaningfully specific to your brand rather than generic to the product category.'}},
+  {id:'C6',text:'Are competing products making specific false factual claims \u2014 wrong ingredients, fabricated certifications, false performance claims, or misleading comparisons \u2014 that go beyond simply positioning as a cheaper alternative?',
+   opts:{Low:'No \u2014 competing products are openly positioning as alternatives without making specific factual claims that are demonstrably false.',Partial:'Some \u2014 there are questionable or false factual claims in the market but they are not central or systematic.',High:'Yes \u2014 competing products are routinely making specific false factual claims about themselves or about your product that are demonstrably incorrect.'}},
+ ]},
+{id:'D',name:'How dupe-aware is your market?',
+ intro:'The central question. If customers in your market know they are buying a dupe and are choosing it deliberately, the legal tools that depend on customer confusion stop working. This determines whether even the available IP tools will reach your problem in practice.',
+ qs:[
+  {id:'D7',text:'Do competing products position themselves with comparative language in their marketing, influencer content, or user-generated content \u2014 \u201calternative to X\u201d, \u201cdupe of X\u201d, \u201cinspired by X\u201d?',
+   opts:{Low:'No \u2014 competing products do not reference or compare themselves to your brand.',Partial:'Some \u2014 comparative positioning exists but is not central to how competing products are marketed or discussed.',High:'Frequent \u2014 comparison to your brand is a core part of how the competing product is sold and discussed in this market.'}},
+ ]},
+{id:'E',name:'Is there harm worth acting on?',
+ intro:'Even where legal or strategic options exist, they only matter if there is real harm. This is the threshold question for whether a conversation is worth having at all.',
+ qs:[
+  {id:'E8',text:'Is there real evidence of harm from dupe activity \u2014 lost sales, customer feedback, documented brand dilution, or measurable price pressure on your product?',
+   opts:{Low:'Minor or no clear evidence \u2014 dupe products exist but their impact on your business is not yet measurable.',Partial:'Some evidence \u2014 signs of harm exist such as lost accounts, pricing pressure, or customer feedback, but it is not yet substantial or well-documented.',High:'Clear evidence \u2014 you can point to documented lost sales, measurable damage to brand value, or sustained margin pressure that is directly attributable to dupe activity.'}},
+ ]},
+];
+
+function getPosition(a){
+  const a1=a.A1,a2=a.A2,a3=a.A3,b4=a.B4;
+  if(a1==='Low'){
+    const sb=a2==='High',cc=a3==='High';
+    if(sb&&cc)return{key:'physicalProtected',title:'Strong position on the physical layer',body:"Your product\u2019s value sits primarily in what it does \u2014 and you have meaningful protection for that. A patent, trade secret, or proprietary process creates a real barrier, and consumers actively value the technical story behind the product. This is among the strongest positions a brand can occupy against dupes. Cheaper alternatives in your market are buying something genuinely different from what you offer, and your customers know it."};
+    if(sb&&!cc)return{key:'barrierNoCommercial',title:'Technical protection without commercial conviction',body:"Your product\u2019s value sits primarily in what it does \u2014 and you have technical protection for that \u2014 but consumers do not appear to factor your technical advantage into their purchasing. The barrier is doing legal work but not commercial work. A competing product that performs similarly is, in your customers\u2019 eyes, an acceptable substitute even though it isn\u2019t technically equivalent. Your defence may need to be commercial communication, not legal action."};
+    if(!sb&&cc)return{key:'narrativeOnly',title:'Narrative-led protection without hard IP',body:"Your product\u2019s value sits primarily in what it does, and although you do not have hard technical protection, consumers actively believe in the specific formulation, process, or science behind your product. The brand has built genuine conviction \u2014 Olaplex-style cult belief \u2014 that a cheaper alternative cannot easily displace. Your defence here is largely commercial and narrative, not legal."};
+    return{key:'fullyExposed',title:'Fully exposed on the physical layer',body:"Your product\u2019s value sits primarily in what it does \u2014 and there is no significant barrier protecting that, technical or commercial. This is a structurally difficult position. Customers in your market treat competing products as functional equivalents, and a cheaper alternative is an acceptable substitute for most of them. Without protection at the physical layer, your defence needs to come from elsewhere \u2014 brand, distribution, or relationships \u2014 and those layers may also need building from scratch."};
+  }
+  if(a1==='Partial'){
+    const layer=b4==='High'?'Your most exposed layer is your visual identity \u2014 the packaging, codes, and aesthetic that signal what your brand is. Dupes can adopt these codes at lower prices even where they cannot replicate the rest.':b4==='Partial'?'Your most exposed layer is your visual identity, which can be partially evoked by competitors even where it cannot be copied outright.':'Your value layers are relatively protected \u2014 even your visual identity is specific enough to be hard to replicate without crossing into direct copying.';
+    return{key:'multiLayer',title:'Value distributed across multiple layers',body:"Your brand\u2019s value sits across multiple layers \u2014 the physical product, the visual identity, and the brand meaning all contribute. This is the position most mature brands occupy. It is also the most resilient: dupes can copy one layer, but rarely all of them, and the layers reinforce each other commercially. "+layer};
+  }
+  if(b4==='Low')return{key:'intangibleStrong',title:'Intangible value with low visual exposure',body:"Your brand\u2019s value sits primarily in what it represents \u2014 identity, meaning, community \u2014 and the layers that carry that value are difficult for a competitor to reproduce. Your visual identity is specific enough that dupes cannot easily evoke it without crossing into direct copying. This is a strong position. Whatever legal action is available, your primary defence is already working: dupes can copy the look at lower prices, but they cannot copy what your brand actually means to your customers."};
+  if(b4==='Partial')return{key:'intangiblePartial',title:'Intangible value with some visual exposure',body:"Your brand\u2019s value sits primarily in what it represents \u2014 identity, meaning, community \u2014 and that intangible layer is hard for a dupe to take. Your most exposed layer is the visual identity: the codes, packaging, and aesthetic that signal what your brand is. Dupes can adopt these codes at lower prices even where they cannot replicate what your brand means. Your defence is to protect what is registrable and reinforce what cannot be copied."};
+  return{key:'intangibleExposedVisual',title:'Intangible value, visual codes widely accessible',body:"Your brand\u2019s value sits primarily in what it represents \u2014 but the visual codes that carry that meaning are widely accessible and easily reproduced. Dupes in your market are not copying the brand directly; they are evoking it through the same colour palette, packaging language, and category codes you use. The brand meaning itself is harder to copy, but the visual signals that point to it are exposed. Your defence works on two layers: protect what is legally registrable in the visual identity, and reinforce the intangible meaning that cannot be copied at all."};
+}
+
+function getLegalReach(a){
+  const c5=a.C5,c6=a.C6,d7=a.D7;
+  const dupeAware=d7==='High'||d7==='Partial';
+  const hasDesign=c5==='High';
+  const hasFalseClaims=c6==='High';
+  if(hasDesign&&hasFalseClaims&&dupeAware)return{key:'bothTools',title:'Two confusion-independent tools available',body:"Two legal tools apply to your situation: design law (which protects your registrable visual features regardless of customer confusion) and consumer protection law (which addresses the specific false factual claims being made by competing products). Both tools work in a dupe-aware market because neither depends on customer confusion. The rest of the toolkit \u2014 trade mark infringement, passing off, broader misleading conduct claims \u2014 is structurally weakened by how dupe-aware your market is."};
+  if(hasDesign&&!dupeAware)return{key:'directTools',title:'Direct legal tools available',body:"The law has direct tools available to you. Your product has visual features distinctive enough to register as designs, and your market is not yet significantly dupe-aware \u2014 which means confusion-based tools (trade mark infringement, passing off, misleading conduct) also remain viable. This is the broadest set of options available under Australian IP law."};
+  if(hasDesign&&dupeAware)return{key:'designLawApplies',title:'Design law applies, the rest is weakened',body:"Design law applies to your situation \u2014 your product has registrable visual features, and design infringement does not require customer confusion to enforce. But the rest of the legal toolkit is weakened by your market\u2019s dupe-awareness. Trade mark infringement, passing off, and misleading conduct claims all require some form of customer confusion or misrepresentation, and that element is structurally difficult to establish where customers are knowingly choosing the cheaper alternative. Design registration is the tool that works."};
+  if(!hasDesign&&hasFalseClaims)return{key:'falseClaimsOnly',title:'Consumer protection law is your narrow lever',body:"Most of the standard IP toolkit does not reach your situation \u2014 your product does not have visual features distinctive enough to register as designs, which removes the main confusion-independent tool. But where competing products are making specific false factual claims about themselves or about your product, you have a direct path under the Australian Consumer Law that does not require customer confusion. That tool is available regardless of how dupe-aware the market is, but it is narrow: it only reaches the false claims, not the dupe positioning itself."};
+  if(!hasDesign&&!hasFalseClaims&&dupeAware)return{key:'limitedReach',title:'Australian IP law has limited reach here',body:"Australian IP law has limited reach in your situation. Your product does not have visual features distinctive enough to register as designs. There are no specific false factual claims being made that would trigger a consumer protection response. And your market is dupe-aware, which means the confusion-based tools (trade mark infringement, passing off, misleading conduct) will struggle to establish the deception they require. This is not unusual. Most dupe problems sit largely outside what Australian IP law directly addresses. What that means is that your defence is mostly commercial rather than legal \u2014 and that is often the honest answer for brands in your position."};
+  return{key:'confusionTheoretical',title:'Confusion-based claims theoretically available',body:"The standard IP toolkit is theoretically available \u2014 your market is not significantly dupe-aware, so confusion-based claims remain viable \u2014 but you do not have the strongest individual tools (no registrable design features, no false claims to act on). What you can pursue is general trade mark protection and passing off based on the reputation your brand has built. These are situational tools that depend on the specific facts of any future enforcement action."};
+}
+
+function getHarm(a){
+  const e8=a.E8;
+  if(e8==='High')return{title:'Clear evidence of harm \u2014 worth acting on',body:"There is clear evidence of harm. Whatever legal or commercial response you take, the harm threshold is met \u2014 this is worth a conversation. The question is no longer whether to act, but how to allocate effort across the legal and commercial responses available to you."};
+  if(e8==='Partial')return{title:'Some evidence \u2014 documentation is the priority',body:"There is some evidence of harm \u2014 lost accounts, pricing pressure, customer feedback \u2014 but it is not yet substantial or well-documented. Building that documentation is your immediate priority. Without it, even the legal tools that are available will be difficult to pursue, because most claims require evidence of actual or likely damage. The next step is operational: start tracking, recording, and quantifying."};
+  return{title:'No substantial harm yet \u2014 worth monitoring',body:"There is no current evidence of substantial harm. This may change as dupes establish more presence in your market \u2014 worth monitoring rather than acting on now. Documenting what you observe (when dupes appear, where, at what price points) builds the evidence base if action becomes worthwhile later."};
+}
+
+function getContact(legalKey,harmKey,positionKey,a){
+  const a1=a.A1,a3=a.A3;
+  if(legalKey==='directTools'){
+    if(harmKey==='High')return"Your situation has real legal options under Australian IP law, and there is clear evidence the dupe activity is affecting your business. The next conversation is about prioritising which tools to deploy first \u2014 design registration enforcement, trade mark action, or consumer protection claims \u2014 and how to sequence them efficiently. Contact us at [placeholder] to take this further.";
+    if(harmKey==='Partial')return"Your situation has real legal options and there is early evidence of harm. The next conversation is about which tools to use, in what order, and how to build the documentation that will support enforcement if action becomes necessary. Contact us at [placeholder] to discuss.";
+    return"Your situation has strong legal options should you need them, though harm is not yet substantial. The most useful conversation now is a strategic review: which protections to put in place proactively, how to monitor for the activity that would change the picture, and what positioning will hold up if the dupe market in your category develops. Contact us at [placeholder] to discuss.";
+  }
+  if(legalKey==='designLawApplies'){
+    if(harmKey==='High'){
+      if(positionKey==='multiLayer')return"Design law is your main legal lever in a dupe-aware market, and there is clear evidence of harm. The next conversation has two parts: enforcing your design protection now, and developing the commercial strategy to defend the value layers \u2014 brand meaning, customer experience, technical narrative \u2014 that the law cannot reach. This is the Dyson-style position: your brand has real legal teeth on the visual layer, but commercial defence is what carries the rest. Contact us at [placeholder] to discuss.";
+      if(positionKey==='intangibleStrong'||positionKey==='intangiblePartial'||positionKey==='intangibleExposedVisual')return"Design law is your main legal lever in a dupe-aware market, and there is clear evidence of harm. The strategic priority is design enforcement on your registrable visual identity, alongside reinforcing the brand meaning that dupes cannot copy. The legal action protects the visual codes; the commercial work protects what those codes signify. Contact us at [placeholder] to discuss.";
+      if(a1==='Low'&&a3==='High')return"Design law is your main legal lever in a dupe-aware market, and there is clear evidence of harm. Your strongest commercial defence is the consumer conviction around your formulation or technical story \u2014 your customers actively believe in what makes your product different. The next conversation is about enforcing on the visual layer and reinforcing the technical narrative that keeps customers choosing you despite the dupes. Contact us at [placeholder] to discuss.";
+      return"Design law is your main legal lever in a dupe-aware market, and there is clear evidence of harm. The next conversation is about enforcing your design protection alongside the commercial defence your situation requires. Contact us at [placeholder] to discuss.";
+    }
+    if(harmKey==='Partial')return"Design law is your main legal lever in a dupe-aware market, and there is some evidence of harm. The next conversation is about enforcing or expanding your design protection, building the documentation that supports future action, and developing the commercial strategy to defend the value layers the law cannot reach. Contact us at [placeholder] to discuss.";
+    return"Design law applies to your situation, though harm is not yet substantial. The most useful conversation is proactive: how to make the most of your registrable design features before dupe activity escalates, and what commercial positioning will hold up as your market becomes more dupe-aware. Contact us at [placeholder] to discuss.";
+  }
+  if(legalKey==='falseClaimsOnly'){
+    if(harmKey==='High')return"The consumer protection route is your most direct legal tool, and there is clear evidence of harm from dupe activity \u2014 including from the false claims themselves. The next conversation is about pursuing the false-claims action while developing the commercial defence for the rest of the problem, which is structurally outside what the law can reach. Contact us at [placeholder] to discuss.";
+    if(harmKey==='Partial')return"The consumer protection route is your most direct legal tool, but it is narrow \u2014 addressing the false claims rather than the dupe positioning itself. There is some evidence of harm but it is not yet well-documented. The next conversation is about scoping the false-claims action, building the harm documentation, and developing the broader commercial strategy. Contact us at [placeholder] to discuss.";
+    return"The consumer protection route is available where competing products make false claims, but harm to your business is not yet substantial. The most useful conversation is proactive: building the documentation that would support action if needed, and developing the commercial defence for the broader dupe problem the law cannot reach. Contact us at [placeholder] to discuss.";
+  }
+  if(legalKey==='bothTools'){
+    if(harmKey==='High')return"You have two legal tools available that work even in a dupe-aware market \u2014 design law and consumer protection law \u2014 and clear evidence of harm. The next conversation is about deploying both effectively and developing the commercial strategy alongside them. This is one of the stronger legal positions a brand in a dupe-aware market can have. Contact us at [placeholder] to discuss.";
+    if(harmKey==='Partial')return"You have two legal tools that work in a dupe-aware market, with some evidence of harm. The next conversation is about scoping both legal pathways while building the documentation that will support either one. Contact us at [placeholder] to discuss.";
+    return"You have legal tools available that would work if dupe activity escalates. The most useful conversation now is preparatory \u2014 strengthening your registrable design protection, documenting the false claims as they appear, and developing the commercial strategy that supports both. Contact us at [placeholder] to discuss.";
+  }
+  if(legalKey==='confusionTheoretical'){
+    if(harmKey==='High')return"Your legal options exist but are situational \u2014 they depend on the specific facts of any future enforcement action. There is clear evidence of harm, which makes the situation worth pursuing. The next conversation is a strategic review of the most likely enforcement angles given your specific market and what additional protection should be put in place to strengthen them. Contact us at [placeholder] to discuss.";
+    if(harmKey==='Partial')return"Your legal options exist but are situational. The most useful conversation is a strategic review: which positioning will support enforcement if litigation becomes necessary, what additional protections to put in place, and what commercial defence belongs alongside the legal one. Contact us at [placeholder] to discuss.";
+    return"Your legal options exist in principle, though there is not yet substantial harm to act on. The most useful conversation is proactive: making sure your brand is positioned to defend itself if the situation develops, and putting in place the registrations and documentation that would strengthen any future action. Contact us at [placeholder] to discuss.";
+  }
+  if(harmKey==='High'){
+    if(positionKey==='intangibleStrong'||positionKey==='intangiblePartial'||positionKey==='intangibleExposedVisual')return"Australian IP law does not directly reach the kind of dupe problem you are facing, but there is clear evidence of harm to your business. The conversation worth having is about commercial defence \u2014 your brand\u2019s intangible value (meaning, identity, community) is what dupes cannot take, and reinforcing those layers is your most effective response. We do that strategic work alongside the legal advice. Contact us at [placeholder] to discuss.";
+    if(a1==='Low'&&a3==='High')return"Australian IP law does not directly reach the kind of dupe problem you are facing, but there is clear evidence of harm and a strong base to defend from: consumers genuinely believe in what makes your product different. The conversation is about reinforcing that conviction commercially \u2014 communicating the technical or formulation story, building the customer relationships that survive price pressure, and positioning the brand to hold premium. Contact us at [placeholder] to discuss.";
+    if(positionKey==='fullyExposed')return"Australian IP law does not directly reach the kind of dupe problem you are facing, and the commercial layers that would normally defend a brand in this position \u2014 consumer conviction, intangible value, technical narrative \u2014 are not yet strong enough. There is clear evidence of harm. This is the hardest position the guide identifies, and the honest conversation is about whether the brand needs structural commercial repositioning, not just defensive action. Contact us at [placeholder] to discuss.";
+    return"Australian IP law does not directly reach the kind of dupe problem you are facing, but there is clear evidence of harm. The conversation worth having is about commercial defence \u2014 how to position, distribute, and build relationships in a way that makes dupes less of a substitute. Contact us at [placeholder] to discuss.";
+  }
+  if(harmKey==='Partial')return"Australian IP law has limited reach in your situation. The dupe problem is structural, not legal. There is some evidence of harm developing. The conversation worth having is about commercial defence \u2014 how to position, distribute, and build relationships in a way that makes dupes less of a substitute, and how to document the impact in case the legal picture changes. Contact us at [placeholder] to discuss.";
+  return"Australian IP law has limited reach in your situation, but harm is not yet substantial. The most useful conversation is proactive commercial strategy: building the brand layers (meaning, community, customer experience) that dupes cannot copy, before the activity in your market intensifies. Contact us at [placeholder] to discuss.";
+}
+
+function getSpecialNote(a){
+  const ans=Object.values(a);
+  const allLow=ans.length===8&&ans.every(v=>v==='Low');
+  const allHigh=ans.length===8&&ans.every(v=>v==='High');
+  if(allLow)return"Your profile suggests very limited dupe exposure across every layer the diagnostic measures. If dupes are not currently affecting your business meaningfully, this guide may not be the most useful framework for your situation. If you are completing this prospectively or because you anticipate future exposure, the recommendations below still apply.";
+  if(allHigh)return"Your profile indicates exposure across every layer the diagnostic measures. This is uncommon \u2014 most brands have at least one layer that is structurally defensible. Worth confirming whether the High scores reflect actual exposure or whether some layers were scored conservatively. Either way, a consultation conversation is the next step.";
+  if(a.A1==='Low'&&a.A2==='Low'&&a.A3==='Low')return"This is among the harder positions the guide identifies \u2014 the value layer that is most exposed to dupes is the one your brand is most reliant on. The recommendations below acknowledge this directly.";
+  return null;
+}
+
+const TOTAL_Q=8;
+function answered(a){return Object.keys(a).length;}
+function catAns(a,id){return CATS.find(c=>c.id===id).qs.filter(q=>a[q.id]).length;}
+
+let ST={step:0,answers:{}};
+function set(p){ST={...ST,...p};render();}
+
+function renderCat(cat,step){
+  const{answers}=ST;
+  const done=catAns(answers,cat.id);
+  return`<div style="font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.06em;font-weight:500;margin-bottom:4px">Category ${cat.id} of 5</div>
+  <h2 style="font-size:20px;font-weight:500;margin:0 0 6px">${cat.name}</h2>
+  <p style="font-size:13px;color:var(--color-text-secondary);margin:0 0 20px;line-height:1.6">${cat.intro}</p>
+  ${cat.qs.map(q=>`<div class="q-card${answers[q.id]?' done':''}">
+    <div style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:${q.note?'4':'12'}px;line-height:1.6">${q.text}</div>
+    ${q.note?`<div class="q-note">${q.note}</div>`:''}
+    ${Object.entries(q.opts).map(([val,desc])=>`<div class="opt-row${answers[q.id]===val?' sel':''}" onclick="pick('${q.id}','${val}')">
+      <div class="opt-label">${val}</div><div class="opt-desc">${desc}</div>
+    </div>`).join('')}
+  </div>`).join('')}
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+    <button onclick="go(${step-1})" style="visibility:${step>0?'visible':'hidden'}">&larr; Back</button>
+    <span style="font-size:12px;color:var(--color-text-tertiary)">${done} / ${cat.qs.length} answered</span>
+    <button onclick="go(${step+1})">${step===4?'See results ↗':'Next &rarr;'}</button>
+  </div>`;
+}
+
+function render(){
+  const{step,answers}=ST;
+  const root=document.getElementById('root');
+  const stepLabels=[...CATS.map(c=>c.id),'Results'];
+  const prog=`<div style="display:flex;align-items:center;gap:5px;margin-bottom:20px;flex-wrap:wrap">
+    ${stepLabels.map((s,i)=>`<div style="display:flex;align-items:center;gap:5px">
+      <div class="step-dot ${i<step?'done':i===step?'active':''}">${i<step?'<i class="ti ti-check" aria-hidden="true" style="font-size:13px"></i>':s}</div>
+      ${i<5?`<div style="width:14px;height:1px;background:var(--color-border-tertiary)"></div>`:''}
+    </div>`).join('')}
+  </div>`;
+
+  if(step===0){
+    root.innerHTML=prog+
+    `<div class="dupe-bar">
+      <div style="font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px">Before you start: this is a guide for dupes, not for copies.</div>
+      <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.65">A copy tries to pass itself off as your product \u2014 using your name, your logo, or your packaging to make customers believe they are buying the original. That is counterfeiting, and the law treats it relatively well. A dupe is different. It openly positions as a cheaper alternative. It might use the same packaging codes, the same colour palette, the same feel \u2014 but it doesn\u2019t pretend to be you. Customers know exactly what they are buying.<br><br>If you think a competitor is making counterfeit copies of your product, this guide isn\u2019t for you \u2014 get in touch with us directly at [placeholder]. That is a different legal problem with a different set of tools. If your problem is dupes, work through the diagnostic below.</div>
     </div>
-  </body>
-</html>
+    ${renderCat(CATS[0],step)}`;
+  } else if(step>=1&&step<=4){
+    root.innerHTML=prog+renderCat(CATS[step],step);
+  } else {
+    const done=answered(answers);
+    const position=getPosition(answers);
+    const legal=getLegalReach(answers);
+    const harm=getHarm(answers);
+    const contact=getContact(legal.key,answers.E8||'Low',position.key,answers);
+    const special=getSpecialNote(answers);
+    const catNames={A:'Value & physical protection',B:'Visual exposure',C:'Legal reach',D:'Market awareness',E:'Harm'};
+    const profile=['A','B','C','D','E'].map(id=>{
+      const qs=CATS.find(c=>c.id===id).qs;
+      const vals=qs.map(q=>answers[q.id]).filter(v=>v);
+      if(!vals.length)return`<span class="cat-pill none">${catNames[id]}: ?</span>`;
+      const scores={Low:0,Partial:1,High:2};
+      const avg=vals.reduce((s,v)=>s+scores[v],0)/vals.length;
+      const cls=avg<0.5?'low':avg<=1.5?'partial':'high';
+      const lbl=avg<0.5?'Low':avg<=1.5?'Partial':'High';
+      return`<span class="cat-pill ${cls}">${catNames[id]}: ${lbl}</span>`;
+    }).join('');
+    const warn=done<6?`<div class="warning-banner"><i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:14px;vertical-align:-2px;margin-right:6px"></i>You have answered ${done} of 8 questions. The result below is provisional \u2014 complete more questions for a more reliable read.</div>`:'';
+
+    root.innerHTML=prog+warn+
+    `<div style="margin-bottom:6px;font-size:11px;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.06em;font-weight:500">Your profile</div>
+    <div style="margin-bottom:20px">${profile}</div>
+    ${special?`<div class="special-note">${special}</div>`:''}
+    <div class="section-block">
+      <div class="section-label">Section 1 \u00b7 Your position</div>
+      <div class="section-title">${position.title}</div>
+      <div class="section-body">${position.body}</div>
+    </div>
+    <div class="section-block">
+      <div class="section-label">Section 2 \u00b7 What the law can reach</div>
+      <div class="section-title">${legal.title}</div>
+      <div class="section-body">${legal.body}</div>
+    </div>
+    <div class="section-block">
+      <div class="section-label">Section 3 \u00b7 Is this worth acting on?</div>
+      <div class="section-title">${harm.title}</div>
+      <div class="section-body">${harm.body}</div>
+    </div>
+    <div class="cta-block">
+      <div class="cta-label">Section 4 \u00b7 Where to from here</div>
+      <div class="cta-body">${contact}</div>
+    </div>
+    <div class="counterfeit-note"><strong style="font-weight:500;color:#5C3A06">A note on counterfeits:</strong> This guide is for dupes \u2014 products that position openly as alternatives to yours. If your problem is counterfeiting \u2014 products using your name, logo, or trade dress to deceive customers into thinking they are buying the original \u2014 that is a different legal problem with different tools available to you. Contact us directly at [placeholder] to discuss.</div>
+    <div class="scope-note">The recommendations on this page are directional. They identify the structural shape of your situation under Australian IP law and indicate where the most useful next steps lie. Specific legal and commercial strategy depends on the facts of your particular brand, market, and competitive position \u2014 and is the work we do in consultation.</div>
+    <div style="display:flex;justify-content:space-between;margin-top:8px">
+      <button onclick="go(4)">&larr; Back</button>
+      <button onclick="restart()">Start again ↗</button>
+    </div>
+    <div class="limit-note">This guide is calibrated to Australian intellectual property law. It is not legal advice and is intended as a working framework for the conversation you have with us or with another advisor. Industry-specific regulation (therapeutic goods, food labelling, cosmetics, financial products) may modify the analysis materially.</div>`;
+  }
+}
+
+window.pick=(qid,val)=>set({answers:{...ST.answers,[qid]:val}});
+window.go=(s)=>{if(s<0||s>5)return;set({step:s});document.getElementById('root').scrollIntoView({behavior:'smooth',block:'start'});}
+window.restart=()=>set({step:0,answers:{}});
+render();
+</script>
